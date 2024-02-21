@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'express';
-import axios from 'axios';
 import Routes from "./routes.js";
 
 class WebScraper {
@@ -13,7 +12,6 @@ class WebScraper {
         this.port = 4000;
         this.middlewares();
         this.routes();
-        this.run();
     }
 
     run() {
@@ -36,4 +34,5 @@ class WebScraper {
     }
 }
 
-new WebScraper();
+const Scraper = new WebScraper();
+Scraper.run();
