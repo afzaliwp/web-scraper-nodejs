@@ -19,7 +19,7 @@ class Routes {
             const scraper = new Scraper(url, elements);
             const data = await scraper.scrape(req, res);
 
-            res.json(JSON.stringify(data));
+            res.json(data);
         });
     }
 }
