@@ -9,5 +9,5 @@ How to use:
 ```{"title": "h1.product_title.entry-title", "price": ".price-atc-stock-wrapper .amount"}```
 6. you will recieve a json response with the keys of the elements and the values of the selectors. Example:
 ```
-"[{\"title\":\"لپ تاپ 15.6 اینچی لنوو IdeaPad مدل IP1-CBلپ تاپ 15.6 اینچی لنوو IdeaPad مدل IP1-CB\"},{\"price\":\"9,499,000 تومان9,593,990 تومان\"}]"
+[{"title":"لپ تاپ 15.6 اینچی لنوو IdeaPad مدل IP1-CBلپ تاپ 15.6 اینچی لنوو IdeaPad مدل IP1-CB"},{"price":"9,499,000 تومان9,593,990 تومان"}]
 ```
