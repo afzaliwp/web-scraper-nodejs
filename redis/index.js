@@ -3,7 +3,7 @@ import {createClient} from 'redis';
 class Redis {
     client;
 
-    async constructor() {
+    constructor() {
         this.client = createClient();
         this.handleEvents();
     }
@@ -15,9 +15,27 @@ class Redis {
                 console.log('Redis Client Error', err)
             }
         );
+        this.client.on(
+            'connect',
+            () => {
+                console.log('Redis Connected on default port.')
+            }
+        );
     }
 
     async connect() {
         await this.client.connect();
     }
+
+    async get(key) {
+        return await this.client.get(key);
+    }
+
+    async set(key, value) {
+        await this.client.set(key, value);
+    }
+}
+
+export {
+    Redis
 }

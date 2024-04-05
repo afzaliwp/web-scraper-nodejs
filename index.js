@@ -1,15 +1,18 @@
 import express from 'express';
 import bodyParser from 'express';
 import Routes from "./routes.js";
+import {Redis as RedisConnection} from './redis/index.js'
 
 class WebScraper {
 
     app;
     port;
+    redisClient;
 
     constructor() {
         this.app = express();
         this.port = 4000;
+        this.redisClient = new RedisConnection();
         this.middlewares();
         this.routes();
     }
@@ -17,6 +20,7 @@ class WebScraper {
     run() {
         this.app.listen(this.port, () => {
             console.log(`listening on port ${this.port} http://localhost:${this.port}`);
+            this.redisClient.connect();
         });
     }
 
@@ -30,7 +34,7 @@ class WebScraper {
     }
 
     routes() {
-        this.app.use(new Routes());
+        this.app.use(new Routes(this.redisClient));
     }
 }
 
