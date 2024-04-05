@@ -16,22 +16,34 @@ class Routes {
 
     async handleScrapeRoutes() {
         this.routes.get('/scrape', async (req, res) => {
-            let {url, elements} = req.body;
+            let {url, elements, useCache} = req.body;
             const result = {};
-            const shouldBeReceived = {};
+            let shouldBeReceived = {};
             const isCached = [];
             elements = JSON.parse(elements);
 
-            for (let [key, value] of Object.entries(elements)) {
-                const objectKey = `${url}|${key}`;
-                const cache = await this.redisClient.get(objectKey);
+            if ( useCache && '1' === useCache) {
+                useCache = true;
+            } else {
+                useCache = false;
+            }
 
-                if ( cache ) {
-                    result[key] = cache;
-                    isCached.push(key);
-                } else {
-                    shouldBeReceived[key] = value;
+            if ( useCache ) {
+                for (let [key, value] of Object.entries(elements)) {
+                    const objectKey = `${url}|${key}`;
+                    const cache = await this.redisClient.get(objectKey);
+
+                    if ( cache ) {
+                        result[key] = cache;
+                        isCached.push(key);
+                    } else {
+                        shouldBeReceived[key] = value;
+                    }
                 }
+            } else {
+                shouldBeReceived = {
+                    ...elements
+                };
             }
 
             const scraper = new Scraper(url, shouldBeReceived);
@@ -43,7 +55,6 @@ class Routes {
                 await this.redisClient.set(objectKey, value);
             }
 
-            console.log(isCached, result, data)
             res.json({
                 isCached,
                 ...result,

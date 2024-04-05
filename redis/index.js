@@ -32,7 +32,7 @@ class Redis {
     }
 
     async set(key, value) {
-        await this.client.set(key, value);
+        await this.client.set(key, value, 'EX', 10);
     }
 }
 
