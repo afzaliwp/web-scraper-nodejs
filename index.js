@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'express';
 import Routes from "./routes.js";
-import {Redis as RedisConnection} from './redis/index.js'
+import {Redis as RedisConnection} from './redis/index.js';
+import 'dotenv/config.js';
 
 class WebScraper {
 
